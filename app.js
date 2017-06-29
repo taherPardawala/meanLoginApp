@@ -10,8 +10,12 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/loginapp', {useMongoClient: true});
-var db = mongoose.connection;
+mongoose.connect('mongodb://localhost/loginapp');
+
+mongoose.connection.once('open', function(){
+	console.log('connection has been made now make fireworks');
+});
+mongoose.Promise = global.Promise;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
